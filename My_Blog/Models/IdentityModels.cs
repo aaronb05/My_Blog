@@ -45,6 +45,6 @@ namespace My_Blog.Models
         }
 
         public DbSet<BlogPost> Posts { get; set; }
-        public DbSet<Comment> COmments { get; set; }
+        public DbSet<Comment> Comments { get; set; }
     }
 }

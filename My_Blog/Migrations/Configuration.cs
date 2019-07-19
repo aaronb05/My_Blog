@@ -35,6 +35,8 @@ namespace My_Blog.Migrations
 
             #endregion
 
+            #region Assign User Roles
+
             //create users that will occupy roles of either admin or moderator
             var userManager = new UserManager<ApplicationUser>(
                 new UserStore<ApplicationUser>(context));
@@ -63,12 +65,15 @@ namespace My_Blog.Migrations
 
                 }, "abc&123!");
             }
+            //how to assign admin and moderator
 
             var userId = userManager.FindByEmail("JTwichell@mailinator.com").Id;
             userManager.AddToRole(userId, "Admin");
 
             userId = userManager.FindByEmail("JoeSchmo@mailinator.com").Id;
             userManager.AddToRole(userId, "Moderator");
+
+            #endregion
 
             //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
             //  to avoid creating duplicate seed data.
