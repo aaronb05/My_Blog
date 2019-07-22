@@ -6,7 +6,6 @@
 
 <h2>Create</h2>
 
-
 @using (Html.BeginForm()) 
 {
     @Html.AntiForgeryToken()
@@ -27,7 +26,7 @@
             @Html.LabelFor(model => model.Body, htmlAttributes: new { @class = "control-label col-md-2" })
             
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Body, new { htmlAttributes = new { @class = "form-control", id = "editor" } })
+                @Html.EditorFor(model => model.Body, new { htmlAttributes = new { @class = "form-control", id = "blogTextEditor" } })
                 @Html.ValidationMessageFor(model => model.Body, "", new { @class = "text-danger" })
             </div>
             
@@ -71,12 +70,14 @@
     @Scripts.Render("~/bundles/jqueryval")
 
 <script src="~/Scripts/tinymce/tinymce.min.js"></script>
+
 <script src="~/Scripts/tinymce/jquery.tinymce.min.js"></script>
+
 <script type= "text/javascript">
     $(function () {
         tinymce.init({
-            selector: '#editor'
-        })
-    }) 
+            selector: '#blogTextEditor'
+        });
+    }); 
 </script>
 }

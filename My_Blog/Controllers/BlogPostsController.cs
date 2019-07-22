@@ -18,7 +18,7 @@ namespace My_Blog.Controllers
         // GET: BlogPosts
         public ActionResult Index()
         {
-            //var allBlogPosts = db.Posts.Where(b =>b.Published).ToList();
+            var allBlogPosts = db.Posts.Where(b =>b.Published).OrderByDescending(b => b.Created).ToList();
             return View(db.Posts.ToList());
             
         }
@@ -46,6 +46,7 @@ namespace My_Blog.Controllers
         }
 
         // GET: BlogPosts/Create
+        //[Authorize(Roles = "Admin")]
         public ActionResult Create()
         {
             return View();
@@ -91,6 +92,7 @@ namespace My_Blog.Controllers
         }
 
         // GET: BlogPosts/Edit/5
+        //[Authorize(Roles = "Admin")]
         public ActionResult Edit(int? id)
         {
 

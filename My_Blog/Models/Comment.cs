@@ -13,7 +13,6 @@ namespace My_Blog.Models
         public string Body { get; set; }
         public DateTimeOffset Created { get; set; }
         public DateTimeOffset? Updated { get; set; }
-
         public virtual BlogPost BlogPost { get; set; }
         public virtual ApplicationUser Author { get; set; }
 
