@@ -6,16 +6,18 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
 using My_Blog.Models;
 
 namespace My_Blog.Controllers
 {
+    [RequireHttps]
     public class CommentsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Comments
-        //[Authorize(Roles="Moderator, Admin")]
+        [Authorize(Roles="Moderator, Admin")]
         public ActionResult Index()
         {
             var comments = db.Comments.Include(c => c.Author).Include(c => c.BlogPost);
@@ -50,18 +52,23 @@ namespace My_Blog.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,BlogPostId,AuthorId,Body,Created,Updated,UpdateReason")] Comment comment)
+        public ActionResult Create([Bind(Include = "BlogPostId")] Comment comment, string commentBody, string slug)
         {
             if (ModelState.IsValid)
             {
+                comment.Body = commentBody;
+                comment.AuthorId = User.Identity.GetUserId();
+                comment.Created = DateTimeOffset.Now;
                 db.Comments.Add(comment);
                 db.SaveChanges();
-                return RedirectToAction("Index");
             }
 
-            ViewBag.AuthorId = new SelectList(db.Users, "Id", "FirstName", comment.AuthorId);
-            ViewBag.BlogPostId = new SelectList(db.Posts, "Id", "Title", comment.BlogPostId);
-            return View(comment);
+                return RedirectToAction("Details", "BlogPosts", new { slug = slug });
+            
+
+            //ViewBag.AuthorId = new SelectList(db.Users, "Id", "FirstName", comment.AuthorId);
+            //ViewBag.BlogPostId = new SelectList(db.Posts, "Id", "Title", comment.BlogPostId);
+            //return View(comment);
         }
 
         // GET: Comments/Edit/5
@@ -88,12 +95,27 @@ namespace My_Blog.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Id,BlogPostId,AuthorId,Body,Created,Updated,UpdateReason")] Comment comment)
         {
+            if (string.IsNullOrEmpty(comment.UpdateReason))
+            {
+                ModelState.AddModelError("Update Reason", "Please Provide Update Reason");
+                comment.BlogPost = db.Posts.AsNoTracking().FirstOrDefault(b => b.Id == comment.BlogPostId);
+                return View(comment);
+            }
+
             if (ModelState.IsValid)
             {
                 db.Entry(comment).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+
+            
+            //if (comment.UpdateReason == null)
+            //{
+            //    ModelState.AddModelError("Update Reason", "Please Include A Reason For Update");
+            //    return View(comment);
+            //}
+
             ViewBag.AuthorId = new SelectList(db.Users, "Id", "FirstName", comment.AuthorId);
             ViewBag.BlogPostId = new SelectList(db.Posts, "Id", "Title", comment.BlogPostId);
             return View(comment);
@@ -120,9 +142,10 @@ namespace My_Blog.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Comment comment = db.Comments.Find(id);
+            var slug = comment.BlogPost.Slug; 
             db.Comments.Remove(comment);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Details", "BlogPosts", new { slug = slug });
         }
 
         protected override void Dispose(bool disposing)

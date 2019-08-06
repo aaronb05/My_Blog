@@ -40,12 +40,12 @@ namespace My_Blog.Migrations
             //create users that will occupy roles of either admin or moderator
             var userManager = new UserManager<ApplicationUser>(
                 new UserStore<ApplicationUser>(context));
-            if(!context.Users.Any(u => u.Email == "JTwichell@mailinator.com"))
+            if(!context.Users.Any(u => u.Email == "JasonTwichell@mailinator.com"))
             {
                 userManager.Create(new ApplicationUser
                 {
-                    UserName = "JTwichell@mailinator.com",
-                    Email = "JTwichell@mailinator.com",
+                    UserName = "JasonTwichell@mailinator.com",
+                    Email = "JasonTwichell@mailinator.com",
                     FirstName = "Jason",
                     LastName = "Twichell",
                     DisplayName = "twich"
@@ -53,24 +53,26 @@ namespace My_Blog.Migrations
                 },"abc&123!");
             }
 
-            if (!context.Users.Any(u => u.Email == "JoeSchmo@mailinator.com"))
+            if (!context.Users.Any(u => u.Email == "aboyles05@outlook.com"))
             {
                 userManager.Create(new ApplicationUser
                 {
-                    UserName = "JoeSchmo@mailinator.com",
-                    Email = "JoeSchmo@mailinator.com",
-                    FirstName = "John",
-                    LastName = "Doe",
-                    DisplayName = "JDoe"
+                    UserName = "aboyles05@outlook.com",
+                    Email = "aboyles05@outlook.com",
+                    FirstName = "Aaron",
+                    LastName = "Boyles",
+                    DisplayName = "aBoyles"
 
                 }, "abc&123!");
             }
+
+
             //how to assign admin and moderator
 
-            var userId = userManager.FindByEmail("JTwichell@mailinator.com").Id;
+            var userId = userManager.FindByEmail("aboyles05@outlook.com").Id;
             userManager.AddToRole(userId, "Admin");
 
-            userId = userManager.FindByEmail("JoeSchmo@mailinator.com").Id;
+            userId = userManager.FindByEmail("JasonTwichell@mailinator.com").Id;
             userManager.AddToRole(userId, "Moderator");
 
             #endregion

@@ -1,74 +1,130 @@
-﻿@model My_Blog.Models.BlogPost
+﻿
+@model My_Blog.Models.BlogPost
+
 
 @{
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
-
-<div>
-    <h4>BlogPost</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Title)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Title)
-        </dd>
-
-        @*<dt>
-            @Html.DisplayNameFor(model => model.Slug)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Slug)
-        </dd>*@
-
-        @*<dt>
-            @Html.DisplayNameFor(model => model.Body)
-        </dt>*@
-
-        <dd>
-            @Html.DisplayFor(model => model.Body)
-        </dd>
-
-        @*<dt>
-            @Html.DisplayNameFor(model => model.MediaUrl)
-        </dt>*@
-
-        <dd>
-            @Html.DisplayFor(model => model.MediaUrl)
-        </dd>
-
-        @*<dt>
-            @Html.DisplayNameFor(model => model.Published)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Published)
-        </dd>*@
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Created)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Created)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Updated)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Updated)
-        </dd>
-
-    </dl>
-</div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+
+    @if (User.IsInRole("Admin"))
+    {
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id })
+    }
+
     @Html.ActionLink("Back to List", "Index")
 </p>
+
+@{ 
+//var backGroundImage = "/img/default_BlogPostImage.jpg";
+//if (Model.MediaUrl != null)
+}
+
+<section class="site-section pt-5">
+    <div class="container">
+        @{
+            var count = Model.Comments.Count();
+            var word = count == 1 ? "comment" : "comments";
+        }
+        <div class="row blog-entries element-animate">
+            <div class="col-md-12 col-lg-8 main-content">
+                @* TITLE *@
+                <h1 class="mb-4">@Model.Title</h1>
+                <img src="~/images/img_10.jpg" alt="Image" class="img-fluid mb-5">
+                <p class="post-meta">
+                    @* DATE CREATED? *@
+                    @Model.Created.ToString("MMMM d, yyyy")
+                    <span class="ml-2"><span class="fa fa-comments"></span> @count  </span>
+                </p>
+                @* POST CONTENT *@
+                <div class="post-content-body1">
+                    @Html.Raw(Model.Body)
+                </div>
+                <div class="pt-5">
+                    <h3 class="mb-5">
+                        @count @word
+                    </h3>
+                    <ul class="comment-list">
+                        @foreach (var comment in Model.Comments.OrderByDescending(c => c.Created))
+                        {
+                            <li class="comment">
+                                @*<div class="vcard">
+                                    <img src="~/images/person_1.jpg" alt="Image placeholder">
+                                </div>*@
+                                <div class="comment-body">
+                                    <h3>@comment.Author.DisplayName</h3>
+                                    <div class="meta">@comment.Created.ToString("MMMM d, yyyy")</div>
+                                    @comment.Body
+                                </div>
+
+                                @if(User.IsInRole("Admin")|| User.IsInRole("Moderator"))
+                                {
+                                 <div class="row">
+                                     <div class="col-md-6">
+                                           <a href=" @Url.Action("Edit", "Comments", new { Id = comment.Id }) " >Edit </a> 
+                                           <a  href=" @Url.Action("Delete", "Comments", new { Id = comment.Id }) " >Delete </a>
+                                     </div>
+                                 </div>
+                                 
+                                }
+                            </li>
+                        }
+                    </ul>
+
+                    <!-- END comment-list -->
+
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <div class="comment-form-wrap pt-5">
+                            <h3 class="mb-5">Leave a comment</h3>
+                            @using (Html.BeginForm("Create", "Comments", FormMethod.Post))
+                            {
+                                @Html.AntiForgeryToken()
+                                @Html.Hidden("BlogPostId", Model.Id)
+                                @Html.HiddenFor(model => model.Slug)
+                                <form class="p-5 bg-light">
+                                    <div class="form-group">
+                                        <textarea name="commentBody" id="message" placeholder="Enter Comment Here" cols="20" rows="10" class="form-control"></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="submit" value="Post Comment" class="btn btn-primary">
+                                    </div>
+                                </form>
+                            }
+                        </div>
+                    }
+                </div>
+            </div>
+
+            <!-- END main-content -->
+
+            <div class="col-md-12 col-lg-4 sidebar">
+                
+                <!-- END sidebar-box -->
+                <div class="sidebar-box">
+                    <div class="bio text-center">
+                        <img src="~/images/person_2.jpg" alt="Image Placeholder" class="img-fluid">
+                        <div class="bio-body">
+                            <h2>Aaron Boyles</h2>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Exercitationem facilis sunt repellendus excepturi beatae porro debitis voluptate nulla quo veniam fuga sit molestias minus.</p>
+                            <p><a href="/home/about" class="btn btn-primary btn-sm rounded">Read my bio</a></p>
+                            <p class="social">
+                                <a href="#" class="p-2"><span class="fa fa-facebook"></span></a>
+                                <a href="#" class="p-2"><span class="fa fa-twitter"></span></a>
+                                <a href="#" class="p-2"><span class="fa fa-instagram"></span></a>
+                                <a href="#" class="p-2"><span class="fa fa-youtube-play"></span></a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <!-- END sidebar -->
+
+        </div>
+    </div>
+</section>
+
+
+<!-- END section -->

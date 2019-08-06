@@ -6,40 +6,51 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <link href="https://fonts.googleapis.com/css?family=Josefin+Sans:300, 400,700|Inconsolata:400,700" rel="stylesheet">
-
+    <link href="~/images/favicon.ico" rel="shortcut icon"/>
     <link href="~/Content/bootstrap.css" rel="stylesheet" />
     <link href="~/Content/animate.css" rel="stylesheet" />
     <link href="~/Content/owl.carousel.min.css" rel="stylesheet" />
     <link href="~/fonts/ionicons.min.css" rel="stylesheet" />
     <link href="~/fonts/font-awesome.min.css" rel="stylesheet" />
     <link href="~/fonts/flaticon.css" rel="stylesheet" />
+    <link href="~/fonts/fontawesome-webfont.woff2"  />
+    <link href="~/fonts/fontawesome-webfont.woff" />
+    <link href="~/fonts/fontawesome-webfont.ttf" />
     <!-- Theme Style -->
     <link href="~/Content/style.css" rel="stylesheet" />
+
 </head>
 <body>
-
-
     <div class="wrap">
-
         <header role="banner">
             <div class="top-bar">
                 <div class="container">
                     <div class="row">
                         <div class="col-7 social">
-                            <a href="#"><span class="fa fa-twitter"></span></a>
-                            <a href="#"><span class="fa fa-facebook"></span></a>
-                            <a href="#"><span class="fa fa-instagram"></span></a>
-                            <a href="#"><span class="fa fa-youtube-play"></span></a>
+                            <a href="https://twitter.com/air_ron05"><span class="fa fa-twitter"></span></a>
+                            <a href="https://www.facebook.com/aaron.boyles.9"><span class="fa fa-facebook"></span></a>
+                            <a href="https://www.instagram.com/aboyles05/?hl=en"><span class="fa fa-instagram"></span></a>
+                            @*<a href="#"><span class="fa fa-youtube-play"></span></a>*@
                         </div>
                         <div class="col-3 search-top">
-                            <!-- <a href="#"><span class="fa fa-search"></span></a> -->
+                            @using (Html.BeginForm("Index", "BlogPosts", FormMethod.Get, htmlAttributes: new { @class = "search-top-form" }))
+                            {
+                              <div class="controls controls-row search-row">
+                                
+                                  <input id="searchStr" name="searchStr" class="search-top-form" type="text" placeholder="Enter Keyword" />
+                                  <button id="s" class="icon fa fa-search btn-primary" type="submit"></button>
+                               
+                              </div>
+                            }
+
+                            @*<a href="#"><span class="fa fa-search"></span></a>
                             <form action="#" class="search-top-form">
                                 <span class="icon fa fa-search"></span>
                                 <input type="text" id="s" placeholder="Type keyword to search...">
-                            </form>
+                            </form>*@
                         </div>
-                        <div class="col-md-2">
-                            <a href="/account/login" class="btn btn-primary" role="button" >Sign In/Out</a>
+                        <div class="col-md-2 social">
+                            @Html.Partial("_LoginPartial")
                         </div>
                     </div>
                 </div>
@@ -59,19 +70,24 @@
                     <div class="collapse navbar-collapse" id="navbarMenu">
                         <ul class="navbar-nav mx-auto">
                             <li class="nav-item">
-                                <a class="nav-link active" href="/home">Home</a>
+                                <b><a class="nav-link active" href="/home">Home</a></b>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="/BlogPosts">My Posts</a>
+                                <b><a class="nav-link" href="/BlogPosts/Index">My Posts</a></b>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="/home/about">About Me</a>
+                                <b><a class="nav-link" href="/home/about">About Me</a></b>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="/home/contact">Contact</a>
+                                <b><a class="nav-link" href="/home/contact">Contact</a></b>
                             </li>
+                            @if (User.IsInRole("Admin"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link" href="@Url.Action("AdminIndex", "BlogPosts")">View All Posts</a>
+                                </li>
+                            }
                         </ul>
-
                     </div>
                 </div>
             </nav>
@@ -84,80 +100,34 @@
             <div class="container">
                 <div class="row mb-5">
                     <div class="col-md-4">
-                        <h3>About Us</h3>
                         <p class="mb-4">
-                            <img src="images/img_1.jpg" alt="Image placeholder" class="img-fluid">
-                        </p>
 
-                        <p>Lorem ipsum dolor sit amet sa ksal sk sa, consectetur adipisicing elit. Ipsa harum inventore reiciendis. <a href="/BlogPosts">Read More</a></p>
+                            <img src="~/images/BetterLogo.png" />
+
+                        </p>
                     </div>
                     <div class="col-md-6 ml-auto">
                         <div class="row">
-                            <div class="col-md-7">
-                                <h3>Latest Post</h3>
-                                <div class="post-entry-sidebar">
-                                    <ul>
-                                        <li>
-                                            <a href="">
-                                                <img src="~/images/img_6.jpg" alt="Image placeholder" class="mr-4">
-                                                <div class="text">
-                                                    <h4>How to Find the Video Games of Your Youth</h4>
-                                                    <div class="post-meta">
-                                                        <span class="mr-2">March 15, 2018 </span> &bullet;
-                                                        <span class="ml-2"><span class="fa fa-comments"></span> 3</span>
-                                                    </div>
-                                                </div>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="">
-                                                <img src="~/images/img_3.jpg" alt="Image placeholder" class="mr-4">
-                                                <div class="text">
-                                                    <h4>How to Find the Video Games of Your Youth</h4>
-                                                    <div class="post-meta">
-                                                        <span class="mr-2">March 15, 2018 </span> &bullet;
-                                                        <span class="ml-2"><span class="fa fa-comments"></span> 3</span>
-                                                    </div>
-                                                </div>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="">
-                                                <img src="~/images/img_4.jpg" alt="Image placeholder" class="mr-4">
-                                                <div class="text">
-                                                    <h4>How to Find the Video Games of Your Youth</h4>
-                                                    <div class="post-meta">
-                                                        <span class="mr-2">March 15, 2018 </span> &bullet;
-                                                        <span class="ml-2"><span class="fa fa-comments"></span> 3</span>
-                                                    </div>
-                                                </div>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="col-md-1"></div>
-
                             <div class="col-md-4">
-
                                 <div class="mb-5">
                                     <h3>Quick Links</h3>
                                     <ul class="list-unstyled">
                                         <li><a href="#">Home</a></li>
                                         <li><a href="/BlogPosts">Blog Posts</a></li>
-                                        <li><a href="#">Categories</a></li>
+                                        @if (User.IsInRole("Admin"))
+                                        {
+                                        <li>
+                                            @Html.ActionLink("Create Blog Post", "Create", "BlogPosts")
+                                        </li>
+                                        }
                                     </ul>
                                 </div>
-
                                 <div class="mb-5">
                                     <h3>Social</h3>
                                     <ul class="list-unstyled footer-social">
                                         <li><a href="#"><span class="fa fa-twitter"></span> Twitter</a></li>
                                         <li><a href="#"><span class="fa fa-facebook"></span> Facebook</a></li>
                                         <li><a href="#"><span class="fa fa-instagram"></span> Instagram</a></li>
-                                        <li><a href="#"><span class="fa fa-vimeo"></span> Vimeo</a></li>
-                                        <li><a href="#"><span class="fa fa-youtube-play"></span> Youtube</a></li>
-                                        <li><a href="#"><span class="fa fa-snapchat"></span> Snapshot</a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -194,5 +164,6 @@
     <script src="~/Scripts/main.js"></script>
 
     @RenderSection("scripts", required: false)
+
 </body>
 </html>

@@ -10,7 +10,7 @@ using My_Blog.Models;
 
 namespace My_Blog.Controllers
 {
-    [Authorize]
+    [Authorize, RequireHttps]
     public class ManageController : Controller
     {
         private ApplicationSignInManager _signInManager;
