@@ -11,7 +11,7 @@
 
 <div class="row">
     <div class="col-md-12">
-        <br/>
+        <br />
     </div>
 </div>
 
@@ -31,32 +31,39 @@
 @* LIST OF BLOG POSTS *@
 
 <div class="row blog-entries">
+
+
     @foreach (var post in Model)
     {
-        <div class="offset-1 col-md-12 col-lg-8 main-content">
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="post-entry-horzontal">
-                        <a href="@Url.Action("Details", "BlogPosts", new { slug = post.Slug })" class="blog-entry element-animate" data-animate-effect="fadeIn">
-                            <img src="~/images/img_5.jpg" alt="Image placeholder">
-                            <div class="blog-content-body">
-                                <div class="post-meta">
-                                    <span class="author mr-2"><img src="~/images/person_1.jpg" alt="Colorlib"> Colorlib</span>&bullet;
-                                    <span class="mr-2">@post.Created.ToString("MMMM d, yyyy") </span> &bullet;
-                                    <span class="ml-2"><span class="fa fa-comments"></span> 3</span>
-                                </div>
-                                <div class="post-meta">
-                                    <h2> @post.Title</h2>
-                                </div>
+    <div class="offset-1 col-md-12 col-lg-8 main-content">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="post-entry-horzontal">
+                    <a href="@Url.Action("Details", "BlogPosts", new { slug = post.Slug })" class="blog-entry element-animate" data-animate-effect="fadeIn">
+                        <img src="~/images/img_5.jpg" alt="Image placeholder">
+                        <div class="blog-content-body">
+                            <div class="post-meta">
+                                <span class="author mr-2"><img src="~/images/person_1.jpg"> </span>&bullet;
+                                <span class="mr-2">@post.Created.ToString("MMMM d, yyyy") </span> &bullet;
+                                <span class="ml-2"><span class="fa fa-comments"></span> 3</span>
                             </div>
-                        </a>
-                    </div>
+                            <div class="post-meta">
+                                <h2> @post.Title</h2>
+                            </div>
+                        </div>
+                    </a>
                 </div>
             </div>
         </div>
+    </div>
     }
+
 </div>
 <br />
+
+
+
+
 
 @*<p>
     @if (User.IsInRole("Admin"))
@@ -70,5 +77,5 @@
     }
      </p>*@
 
-            Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
-            @Html.PagedListPager(Model, page => Url.Action("Index", new { page, searchStr = ViewBag.Search }))
+                Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+                @Html.PagedListPager(Model, page => Url.Action("Index", new { page, searchStr = ViewBag.Search }))

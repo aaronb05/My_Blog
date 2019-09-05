@@ -50,13 +50,12 @@ namespace My_Blog
             //    clientId: "",
             //    clientSecret: "");
 
-            //app.UseTwitterAuthentication(
-            //   consumerKey: "",
-            //   consumerSecret: "");
+            app.UseTwitterAuthentication(
+               consumerSecret: "AAJk8AgG8WObz43Yc0y83q1YdryGPnH2Wo9pc7wjpYJNHUv516 ");
 
-            //app.UseFacebookAuthentication(
-            //   appId: "",
-            //   appSecret: "");
+            app.UseFacebookAuthentication(
+               appId: "492895971484745",
+               appSecret: "4b324c9a639c6390db4d77c04fbd5700");
 
             //app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
             //{

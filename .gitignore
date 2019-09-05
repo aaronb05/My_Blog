@@ -350,5 +350,5 @@ MigrationBackup/
 
 *.config
 
-*.auth.cs
+*Startup.Auth.cs
 

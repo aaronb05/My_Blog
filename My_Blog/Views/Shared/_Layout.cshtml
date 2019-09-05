@@ -1,19 +1,19 @@
 ﻿<!doctype html>
 <html lang="en">
 <head>
-
+    <title>Aaron's IT Blog</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <link href="https://fonts.googleapis.com/css?family=Josefin+Sans:300, 400,700|Inconsolata:400,700" rel="stylesheet">
-    <link href="~/images/favicon.ico" rel="shortcut icon"/>
+    <link href="~/images/favicon.ico" rel="shortcut icon" />
     <link href="~/Content/bootstrap.css" rel="stylesheet" />
     <link href="~/Content/animate.css" rel="stylesheet" />
     <link href="~/Content/owl.carousel.min.css" rel="stylesheet" />
     <link href="~/fonts/ionicons.min.css" rel="stylesheet" />
     <link href="~/fonts/font-awesome.min.css" rel="stylesheet" />
     <link href="~/fonts/flaticon.css" rel="stylesheet" />
-    <link href="~/fonts/fontawesome-webfont.woff2"  />
+    <link href="~/fonts/fontawesome-webfont.woff2" />
     <link href="~/fonts/fontawesome-webfont.woff" />
     <link href="~/fonts/fontawesome-webfont.ttf" />
     <!-- Theme Style -->
@@ -70,13 +70,13 @@
                     <div class="collapse navbar-collapse" id="navbarMenu">
                         <ul class="navbar-nav mx-auto">
                             <li class="nav-item">
-                                <b><a class="nav-link active" href="/home">Home</a></b>
+                                <b><a class="nav-link" href="/home">Home  |</a></b>
                             </li>
                             <li class="nav-item">
-                                <b><a class="nav-link" href="/BlogPosts/Index">My Posts</a></b>
+                                <b><a class="nav-link" href="/BlogPosts/Index">My Posts  |</a></b>
                             </li>
                             <li class="nav-item">
-                                <b><a class="nav-link" href="/home/about">About Me</a></b>
+                                <b><a class="nav-link" href="/home/about">About Me  |</a></b>
                             </li>
                             <li class="nav-item">
                                 <b><a class="nav-link" href="/home/contact">Contact</a></b>
@@ -84,7 +84,7 @@
                             @if (User.IsInRole("Admin"))
                             {
                                 <li class="nav-item">
-                                    <a class="nav-link" href="@Url.Action("AdminIndex", "BlogPosts")">View All Posts</a>
+                                    <a class="nav-link" href="@Url.Action("AdminIndex", "BlogPosts")">|  View All Posts</a>
                                 </li>
                             }
                         </ul>
@@ -106,36 +106,32 @@
 
                         </p>
                     </div>
-                    <div class="col-md-6 ml-auto">
-                        <div class="row">
-                            <div class="col-md-4">
-                                <div class="mb-5">
-                                    <h3>Quick Links</h3>
-                                    <ul class="list-unstyled">
-                                        <li><a href="#">Home</a></li>
-                                        <li><a href="/BlogPosts">Blog Posts</a></li>
-                                        @if (User.IsInRole("Admin"))
-                                        {
-                                        <li>
-                                            @Html.ActionLink("Create Blog Post", "Create", "BlogPosts")
-                                        </li>
-                                        }
-                                    </ul>
-                                </div>
-                                <div class="mb-5">
-                                    <h3>Social</h3>
-                                    <ul class="list-unstyled footer-social">
-                                        <li><a href="#"><span class="fa fa-twitter"></span> Twitter</a></li>
-                                        <li><a href="#"><span class="fa fa-facebook"></span> Facebook</a></li>
-                                        <li><a href="#"><span class="fa fa-instagram"></span> Instagram</a></li>
-                                    </ul>
-                                </div>
-                            </div>
+                    <div class="col-md-4 ml-auto" style="padding-top:30px">
+                        <div class="mb-5">
+                            <h3>Quick Links</h3>
+                            <ul class="list-unstyled">
+                                <li><a href="#">Home</a></li>
+                                <li><a href="/BlogPosts">Blog Posts</a></li>
+                                @if (User.IsInRole("Admin"))
+                                {
+                                <li>
+                                    @Html.ActionLink("Create Blog Post", "Create", "BlogPosts")
+                                </li>
+                                }
+                            </ul>
                         </div>
+                    </div>
+                    <div class="col-md-4 mb-5" style="padding-top:30px">
+                        <h3>Social</h3>
+                        <ul class="list-unstyled footer-social">
+                            <li><a href="#"><span class="fa fa-twitter"></span> Twitter</a></li>
+                            <li><a href="#"><span class="fa fa-facebook"></span> Facebook</a></li>
+                            <li><a href="#"><span class="fa fa-instagram"></span> Instagram</a></li>
+                        </ul>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-12 text-center">
+                    <div class="col-md-12 text-center" >
                         <p class="small">
                             <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
                             Copyright &copy;
